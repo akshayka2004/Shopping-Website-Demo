@@ -309,7 +309,7 @@ export default function AdminDashboardPage() {
     return (
       <div
         data-testid="admin-access-denied"
-        className="max-w-lg mx-auto px-4 py-20 text-center space-y-5"
+        className="max-w-lg mx-auto px-4 py-16 sm:py-20 text-center space-y-4 sm:space-y-5"
       >
         <div className="w-14 h-14 rounded-full bg-amber-100 text-amber-900 flex items-center justify-center mx-auto">
           <ShieldAlert className="h-7 w-7" />
@@ -317,7 +317,7 @@ export default function AdminDashboardPage() {
         <h1 className="text-2xl font-serif text-stone-900">
           Administrator Access Required
         </h1>
-        <p className="text-sm text-stone-600">
+        <p className="text-xs sm:text-sm text-stone-600">
           This store management portal is restricted to authorised
           administrators. Please sign in with an administrator account to
           manage products, stock, and orders.
@@ -326,7 +326,7 @@ export default function AdminDashboardPage() {
           <Link
             href="/login"
             data-testid="admin-login-redirect-btn"
-            className="px-6 py-3 rounded-lg bg-stone-900 text-white text-sm font-medium hover:bg-stone-800"
+            className="px-6 py-3 rounded-lg bg-stone-900 text-white text-sm font-medium hover:bg-stone-800 min-h-[44px]"
           >
             Sign In as Administrator
           </Link>
@@ -355,26 +355,26 @@ export default function AdminDashboardPage() {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
       {/* Top Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b border-stone-200 pb-4 sm:pb-5">
         <div>
           <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-amber-800">
             Store Administration Portal
           </span>
           <h1
             data-testid="admin-dashboard-heading"
-            className="text-3xl font-serif text-stone-900 mt-1"
+            className="text-2xl sm:text-3xl font-serif text-stone-900 mt-0.5 sm:mt-1"
           >
             Operations & Inventory Dashboard
           </h1>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <button
             type="button"
             data-testid="admin-new-product-btn"
             onClick={openCreateProductModal}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-stone-900 text-white text-xs font-semibold hover:bg-stone-800 transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg bg-stone-900 text-white text-xs font-semibold hover:bg-stone-800 transition-colors min-h-[44px]"
           >
             <Plus className="h-4 w-4" />
             Add New Product
@@ -382,13 +382,13 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <div className="flex flex-wrap gap-2 border-b border-stone-200 pb-3">
+      {/* Navigation Tabs - Horizontally scrollable on mobile */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none border-b border-stone-200">
         {[
-          { id: "overview", label: "Overview & Analytics", icon: BarChart3 },
+          { id: "overview", label: "Overview", icon: BarChart3 },
           {
             id: "products",
-            label: `Products & Stock (${products.length})`,
+            label: `Products (${products.length})`,
             icon: ShoppingBag,
           },
           {
@@ -415,7 +415,7 @@ export default function AdminDashboardPage() {
               type="button"
               data-testid={`admin-tab-${tab.id}`}
               onClick={() => setActiveTab(tab.id as AdminTab)}
-              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold transition-colors ${
+              className={`shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-colors min-h-[40px] ${
                 active
                   ? "bg-stone-900 text-white"
                   : "bg-white text-stone-700 border border-stone-200 hover:bg-stone-100"
@@ -430,79 +430,80 @@ export default function AdminDashboardPage() {
 
       {/* TAB 1: OVERVIEW */}
       {activeTab === "overview" && summary && (
-        <div className="space-y-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <div className="bg-white p-6 rounded-2xl border border-stone-200 space-y-1">
-              <p className="text-xs font-medium text-stone-500 uppercase tracking-wider">
-                Total Store Revenue
+        <div className="space-y-6 sm:space-y-8">
+          {/* 2x2 on mobile, 4-col on desktop */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+            <div className="bg-white p-4 sm:p-6 rounded-2xl border border-stone-200 space-y-1">
+              <p className="text-[10px] sm:text-xs font-medium text-stone-500 uppercase tracking-wider">
+                Total Revenue
               </p>
               <p
                 data-testid="metric-total-revenue"
-                className="text-2xl font-bold text-stone-900"
+                className="text-lg sm:text-2xl font-bold text-stone-900"
               >
                 {formatPrice(summary.metrics.totalRevenue)}
               </p>
-              <p className="text-xs text-emerald-700">
-                {formatPrice(summary.metrics.paidRevenue)} verified paid
+              <p className="text-[10px] sm:text-xs text-emerald-700">
+                {formatPrice(summary.metrics.paidRevenue)} paid
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-stone-200 space-y-1">
-              <p className="text-xs font-medium text-stone-500 uppercase tracking-wider">
+            <div className="bg-white p-4 sm:p-6 rounded-2xl border border-stone-200 space-y-1">
+              <p className="text-[10px] sm:text-xs font-medium text-stone-500 uppercase tracking-wider">
                 Total Orders
               </p>
               <p
                 data-testid="metric-total-orders"
-                className="text-2xl font-bold text-stone-900"
+                className="text-lg sm:text-2xl font-bold text-stone-900"
               >
                 {summary.metrics.totalOrders}
               </p>
-              <p className="text-xs text-stone-500">
+              <p className="text-[10px] sm:text-xs text-stone-500">
                 {summary.statusCounts.CONFIRMED +
                   summary.statusCounts.PROCESSING}{" "}
-                awaiting dispatch
+                in dispatch
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-stone-200 space-y-1">
-              <p className="text-xs font-medium text-stone-500 uppercase tracking-wider">
-                Catalogue Products
+            <div className="bg-white p-4 sm:p-6 rounded-2xl border border-stone-200 space-y-1">
+              <p className="text-[10px] sm:text-xs font-medium text-stone-500 uppercase tracking-wider">
+                Products
               </p>
               <p
                 data-testid="metric-active-products"
-                className="text-2xl font-bold text-stone-900"
+                className="text-lg sm:text-2xl font-bold text-stone-900"
               >
                 {summary.metrics.activeProducts} /{" "}
                 {summary.metrics.totalProducts}
               </p>
-              <p className="text-xs text-stone-500">
-                Across {summary.metrics.totalCategories} collections
+              <p className="text-[10px] sm:text-xs text-stone-500">
+                {summary.metrics.totalCategories} collections
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-stone-200 space-y-1">
-              <p className="text-xs font-medium text-stone-500 uppercase tracking-wider">
-                Total Inventory Stock
+            <div className="bg-white p-4 sm:p-6 rounded-2xl border border-stone-200 space-y-1">
+              <p className="text-[10px] sm:text-xs font-medium text-stone-500 uppercase tracking-wider">
+                Total Inventory
               </p>
               <p
                 data-testid="metric-total-stock"
-                className="text-2xl font-bold text-stone-900"
+                className="text-lg sm:text-2xl font-bold text-stone-900"
               >
                 {summary.metrics.totalStockUnits} units
               </p>
-              <p className="text-xs text-amber-700">
-                {summary.metrics.lowStockCount} variants low in stock
+              <p className="text-[10px] sm:text-xs text-amber-700">
+                {summary.metrics.lowStockCount} low variants
               </p>
             </div>
           </div>
 
           {/* Order Status Breakdown & Low Stock Alerts */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div className="lg:col-span-5 bg-white p-6 rounded-2xl border border-stone-200 space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+            <div className="lg:col-span-5 bg-white p-5 sm:p-6 rounded-2xl border border-stone-200 space-y-4">
               <h2 className="text-base font-serif text-stone-900 border-b border-stone-100 pb-3">
                 Order Fulfilment Summary
               </h2>
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {(
                   [
                     "CONFIRMED",
@@ -525,11 +526,11 @@ export default function AdminDashboardPage() {
               </div>
             </div>
 
-            <div className="lg:col-span-7 bg-white p-6 rounded-2xl border border-stone-200 space-y-4">
+            <div className="lg:col-span-7 bg-white p-5 sm:p-6 rounded-2xl border border-stone-200 space-y-4">
               <div className="flex items-center justify-between border-b border-stone-100 pb-3">
                 <h2 className="text-base font-serif text-stone-900 flex items-center gap-2">
                   <AlertTriangle className="h-4 w-4 text-amber-600" />
-                  Low-Stock Variant Alerts (≤ 7 units)
+                  Low-Stock Alerts (≤ 7 units)
                 </h2>
                 <button
                   type="button"
@@ -555,7 +556,7 @@ export default function AdminDashboardPage() {
                           {v.productTitle}
                         </p>
                         <p className="text-stone-500">
-                          Variant: {v.size} / {v.color} • SKU: {v.sku}
+                          {v.size} / {v.color} • SKU: {v.sku}
                         </p>
                       </div>
                       <span className="px-2.5 py-1 rounded bg-amber-100 text-amber-900 font-semibold">
@@ -572,22 +573,23 @@ export default function AdminDashboardPage() {
 
       {/* TAB 2: PRODUCTS & INVENTORY */}
       {activeTab === "products" && (
-        <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
-          <div className="p-5 border-b border-stone-200 flex items-center justify-between">
+        <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm">
+          <div className="p-4 sm:p-5 border-b border-stone-200 flex items-center justify-between">
             <h2 className="text-base font-serif text-stone-900">
               Product Catalogue & Variant Inventory
             </h2>
             <button
               type="button"
               onClick={openCreateProductModal}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-stone-900 text-white text-xs font-semibold"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-stone-900 text-white text-xs font-semibold min-h-[36px]"
             >
               <Plus className="h-3.5 w-3.5" />
               Add Product
             </button>
           </div>
 
-          <div className="overflow-x-auto">
+          {/* Desktop Table View (>= md) */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-stone-50 text-stone-500 uppercase border-b border-stone-200">
@@ -689,17 +691,100 @@ export default function AdminDashboardPage() {
               </tbody>
             </table>
           </div>
+
+          {/* Mobile Card Layout (< md) */}
+          <div className="md:hidden divide-y divide-stone-200">
+            {products.map((prod) => {
+              const totalStock = prod.variants.reduce(
+                (s, v) => s + v.stock,
+                0
+              );
+              return (
+                <div
+                  key={prod.id}
+                  data-testid={`admin-product-card-${prod.slug}`}
+                  className="p-4 space-y-3"
+                >
+                  <div className="flex items-start gap-3">
+                    <img
+                      src={prod.images[0]}
+                      alt={prod.title}
+                      className="w-14 h-18 rounded-lg object-cover border border-stone-200 shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-[10px] uppercase font-semibold text-stone-500">
+                          {prod.categoryName}
+                        </span>
+                        <span
+                          className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+                            prod.isActive
+                              ? "bg-emerald-100 text-emerald-900"
+                              : "bg-stone-200 text-stone-600"
+                          }`}
+                        >
+                          {prod.isActive ? "Active" : "Inactive"}
+                        </span>
+                      </div>
+                      <p className="font-semibold text-stone-900 text-sm truncate">
+                        {prod.title}
+                      </p>
+                      <p className="font-semibold text-stone-900 text-sm mt-0.5">
+                        {formatPrice(prod.price)}
+                      </p>
+                      <p className="text-[11px] text-stone-500">
+                        Total Stock: <strong>{totalStock}</strong> units
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1 text-[10px]">
+                    {prod.variants.map((v) => (
+                      <span
+                        key={v.id}
+                        className={`px-1.5 py-0.5 rounded border ${
+                          v.stock <= 5
+                            ? "bg-amber-50 border-amber-300 text-amber-900"
+                            : "bg-stone-50 border-stone-200 text-stone-700"
+                        }`}
+                      >
+                        {v.size}/{v.color}: {v.stock}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => openEditProductModal(prod)}
+                      className="flex-1 py-2 px-3 rounded-lg border border-stone-300 bg-white text-stone-800 text-xs font-semibold text-center min-h-[40px] flex items-center justify-center gap-1"
+                    >
+                      <Edit3 className="h-3.5 w-3.5" />
+                      Edit Details
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleToggleProductStatus(prod)}
+                      className="py-2 px-3 rounded-lg border border-stone-200 text-stone-600 text-xs font-medium min-h-[40px]"
+                    >
+                      {prod.isActive ? "Deactivate" : "Activate"}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
 
       {/* TAB 3: CATEGORIES */}
       {activeTab === "categories" && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-5 bg-white p-6 rounded-2xl border border-stone-200 space-y-4 h-fit">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+          <div className="lg:col-span-5 bg-white p-5 sm:p-6 rounded-2xl border border-stone-200 space-y-4 h-fit">
             <h2 className="text-base font-serif text-stone-900 border-b border-stone-100 pb-3">
               Create New Category / Collection
             </h2>
-            <form onSubmit={handleCreateCategory} className="space-y-3">
+            <form onSubmit={handleCreateCategory} className="space-y-3 text-xs sm:text-sm">
               <div>
                 <label className="block text-xs font-medium text-stone-700 mb-1">
                   Category Name *
@@ -711,7 +796,7 @@ export default function AdminDashboardPage() {
                   onChange={(e) => setNewCatName(e.target.value)}
                   placeholder="e.g. Resort Wear"
                   required
-                  className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg"
+                  className="w-full px-3 py-2.5 text-base sm:text-sm border border-stone-300 rounded-lg min-h-[44px]"
                 />
               </div>
               <div>
@@ -724,7 +809,7 @@ export default function AdminDashboardPage() {
                   onChange={(e) => setNewCatDesc(e.target.value)}
                   rows={3}
                   placeholder="Relaxed warm-weather silhouettes..."
-                  className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg"
+                  className="w-full px-3 py-2 text-base sm:text-sm border border-stone-300 rounded-lg"
                 />
               </div>
               <div>
@@ -734,7 +819,7 @@ export default function AdminDashboardPage() {
                 <select
                   value={newCatImage}
                   onChange={(e) => setNewCatImage(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-stone-300 rounded-lg bg-white"
+                  className="w-full px-3 py-2.5 text-xs sm:text-sm border border-stone-300 rounded-lg bg-white min-h-[44px]"
                 >
                   <option value="/images/banners/collection-menswear.jpg">
                     Menswear Editorial Banner
@@ -753,7 +838,7 @@ export default function AdminDashboardPage() {
               <button
                 type="submit"
                 data-testid="admin-save-cat-btn"
-                className="w-full py-2.5 px-4 rounded-lg bg-stone-900 text-white text-xs font-semibold hover:bg-stone-800"
+                className="w-full py-3 px-4 rounded-lg bg-stone-900 text-white text-xs sm:text-sm font-semibold hover:bg-stone-800 min-h-[44px]"
               >
                 Create Category
               </button>
@@ -765,12 +850,12 @@ export default function AdminDashboardPage() {
               <div
                 key={cat.id}
                 data-testid={`admin-category-card-${cat.slug}`}
-                className="bg-white rounded-2xl border border-stone-200 overflow-hidden flex flex-col"
+                className="bg-white rounded-2xl border border-stone-200 overflow-hidden flex flex-col shadow-sm"
               >
                 <img
                   src={cat.image}
                   alt={cat.name}
-                  className="h-36 w-full object-cover"
+                  className="h-32 sm:h-36 w-full object-cover"
                 />
                 <div className="p-4 flex-1 flex flex-col justify-between space-y-2">
                   <div>
@@ -801,21 +886,21 @@ export default function AdminDashboardPage() {
 
       {/* TAB 4: ORDERS & FULFILMENT */}
       {activeTab === "orders" && (
-        <div className="space-y-6">
-          <div className="bg-white p-4 rounded-2xl border border-stone-200 flex flex-wrap items-center justify-between gap-4">
-            <div className="relative flex-1 min-w-[240px]">
+        <div className="space-y-4 sm:space-y-6">
+          <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 shadow-sm">
+            <div className="relative flex-1">
               <Search className="h-4 w-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="search"
                 data-testid="admin-order-search"
                 value={orderSearch}
                 onChange={(e) => setOrderSearch(e.target.value)}
-                placeholder="Search by order ref (ORD-2026-...), customer name, or email..."
-                className="w-full pl-10 pr-4 py-2 text-xs border border-stone-300 rounded-lg"
+                placeholder="Search orders (ORD-2026-..., customer, email)..."
+                className="w-full pl-10 pr-4 py-2.5 text-base sm:text-xs border border-stone-300 rounded-lg min-h-[44px]"
               />
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
               {(
                 [
                   "ALL",
@@ -830,7 +915,7 @@ export default function AdminDashboardPage() {
                   key={st}
                   type="button"
                   onClick={() => setOrderStatusFilter(st)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold ${
+                  className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold min-h-[36px] ${
                     orderStatusFilter === st
                       ? "bg-stone-900 text-white"
                       : "bg-stone-100 text-stone-700 hover:bg-stone-200"
@@ -842,8 +927,9 @@ export default function AdminDashboardPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
-            <div className="overflow-x-auto">
+          <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm">
+            {/* Desktop Table View (>= md) */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
                   <tr className="bg-stone-50 text-stone-500 uppercase border-b border-stone-200">
@@ -906,7 +992,7 @@ export default function AdminDashboardPage() {
                               e.target.value as OrderStatus
                             )
                           }
-                          className="px-2.5 py-1.5 rounded-lg border border-stone-300 bg-white text-xs font-semibold text-stone-900"
+                          className="px-2.5 py-1.5 rounded-lg border border-stone-300 bg-white text-xs font-semibold text-stone-900 min-h-[36px]"
                         >
                           <option value="CONFIRMED">CONFIRMED</option>
                           <option value="PROCESSING">PROCESSING</option>
@@ -919,7 +1005,7 @@ export default function AdminDashboardPage() {
                         <button
                           type="button"
                           onClick={() => setInspectedOrder(ord)}
-                          className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded border border-stone-300 bg-white text-stone-700 hover:border-stone-900"
+                          className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded border border-stone-300 bg-white text-stone-700 hover:border-stone-900 min-h-[36px]"
                         >
                           <Eye className="h-3.5 w-3.5" />
                           View
@@ -930,10 +1016,80 @@ export default function AdminDashboardPage() {
                 </tbody>
               </table>
             </div>
+
+            {/* Mobile Order Cards (< md) */}
+            <div className="md:hidden divide-y divide-stone-200">
+              {filteredOrders.map((ord) => (
+                <div
+                  key={ord.id}
+                  data-testid={`admin-order-card-${ord.orderNumber}`}
+                  className="p-4 space-y-2.5"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-mono font-semibold text-sm text-stone-900">
+                        {ord.orderNumber}
+                      </p>
+                      <p className="text-[11px] text-stone-400">
+                        {new Date(ord.createdAt).toLocaleDateString("en-IN")}
+                      </p>
+                    </div>
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+                        ord.paymentStatus === "PAID"
+                          ? "bg-emerald-100 text-emerald-900"
+                          : "bg-amber-100 text-amber-900"
+                      }`}
+                    >
+                      {ord.paymentStatus}
+                    </span>
+                  </div>
+
+                  <div className="text-xs text-stone-600">
+                    <p className="font-medium text-stone-900">{ord.customerName}</p>
+                    <p>{ord.customerEmail}</p>
+                    <p className="font-semibold text-stone-900 text-sm mt-1">
+                      {formatPrice(ord.totalAmount)} •{" "}
+                      {ord.items.reduce((s, i) => s + i.quantity, 0)} garments
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2 pt-1">
+                    <div className="flex-1">
+                      <select
+                        aria-label={`Fulfilment status for ${ord.orderNumber}`}
+                        data-testid={`admin-order-status-mobile-select-${ord.orderNumber}`}
+                        value={ord.fulfilmentStatus}
+                        onChange={(e) =>
+                          handleUpdateOrderStatus(
+                            ord.id,
+                            e.target.value as OrderStatus
+                          )
+                        }
+                        className="w-full px-2.5 py-2 rounded-lg border border-stone-300 bg-white text-xs font-semibold text-stone-900 min-h-[40px]"
+                      >
+                        <option value="CONFIRMED">CONFIRMED</option>
+                        <option value="PROCESSING">PROCESSING</option>
+                        <option value="SHIPPED">SHIPPED</option>
+                        <option value="DELIVERED">DELIVERED</option>
+                        <option value="CANCELLED">CANCELLED</option>
+                      </select>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setInspectedOrder(ord)}
+                      className="px-3 py-2 rounded-lg border border-stone-300 bg-white text-stone-700 text-xs font-medium min-h-[40px]"
+                    >
+                      Inspect
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           {inspectedOrder && (
-            <div className="bg-white rounded-2xl border-2 border-stone-900 p-6 space-y-4">
+            <div className="bg-white rounded-2xl border-2 border-stone-900 p-5 sm:p-6 space-y-4 shadow-md">
               <div className="flex items-center justify-between border-b border-stone-200 pb-3">
                 <div>
                   <h3 className="text-base font-serif text-stone-900">
@@ -947,12 +1103,12 @@ export default function AdminDashboardPage() {
                 <button
                   type="button"
                   onClick={() => setInspectedOrder(null)}
-                  className="text-xs font-semibold text-stone-500 hover:text-stone-900"
+                  className="text-xs font-semibold text-stone-500 hover:text-stone-900 p-2 min-h-[44px] min-w-[44px]"
                 >
                   Close ✕
                 </button>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs">
                 <div className="p-3.5 rounded-xl bg-stone-50 space-y-1">
                   <p className="font-semibold text-stone-900">
                     Delivery Destination
@@ -981,8 +1137,8 @@ export default function AdminDashboardPage() {
 
       {/* TAB 5: CUSTOMERS */}
       {activeTab === "customers" && summary && (
-        <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
-          <div className="p-5 border-b border-stone-200">
+        <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm">
+          <div className="p-4 sm:p-5 border-b border-stone-200">
             <h2 className="text-base font-serif text-stone-900">
               Registered Customer Directory
             </h2>
@@ -1026,26 +1182,26 @@ export default function AdminDashboardPage() {
       {showProductModal && (
         <div
           data-testid="admin-product-modal"
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
         >
-          <div className="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 space-y-4 shadow-2xl border border-stone-200 max-h-[92vh] overflow-y-auto">
+          <div className="bg-white rounded-2xl max-w-2xl w-full p-5 sm:p-8 space-y-4 shadow-2xl border border-stone-200 max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-stone-200 pb-3">
-              <h2 className="text-xl font-serif text-stone-900">
+              <h2 className="text-lg sm:text-xl font-serif text-stone-900">
                 {editingProduct
-                  ? `Edit Product: ${editingProduct.title}`
+                  ? `Edit: ${editingProduct.title}`
                   : "Create New Product"}
               </h2>
               <button
                 type="button"
                 onClick={() => setShowProductModal(false)}
-                className="text-sm text-stone-500 hover:text-stone-900"
+                className="p-2 text-stone-500 hover:text-stone-900 min-h-[44px] min-w-[44px] flex items-center justify-center"
               >
                 ✕
               </button>
             </div>
 
             <form onSubmit={handleSaveProduct} className="space-y-4 text-xs">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                 <div className="sm:col-span-2">
                   <label className="block font-medium text-stone-700 mb-1">
                     Product Title *
@@ -1057,7 +1213,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) => setProdTitle(e.target.value)}
                     placeholder="e.g. Tailored Linen Overshirt"
                     required
-                    className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg"
+                    className="w-full px-3 py-2.5 text-base sm:text-sm border border-stone-300 rounded-lg min-h-[44px]"
                   />
                 </div>
 
@@ -1071,7 +1227,7 @@ export default function AdminDashboardPage() {
                     value={prodPrice}
                     onChange={(e) => setProdPrice(e.target.value)}
                     required
-                    className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg"
+                    className="w-full px-3 py-2.5 text-base sm:text-sm border border-stone-300 rounded-lg min-h-[44px]"
                   />
                 </div>
 
@@ -1083,7 +1239,7 @@ export default function AdminDashboardPage() {
                     data-testid="modal-product-category"
                     value={prodCategoryId}
                     onChange={(e) => setProdCategoryId(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg bg-white"
+                    className="w-full px-3 py-2.5 text-base sm:text-sm border border-stone-300 rounded-lg bg-white min-h-[44px]"
                   >
                     {categories.map((c) => (
                       <option key={c.id} value={c.id}>
@@ -1100,7 +1256,7 @@ export default function AdminDashboardPage() {
                   <select
                     value={prodImage}
                     onChange={(e) => setProdImage(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg bg-white"
+                    className="w-full px-3 py-2.5 text-xs sm:text-sm border border-stone-300 rounded-lg bg-white min-h-[44px]"
                   >
                     {PRESET_PRODUCT_IMAGES.map((img) => (
                       <option key={img} value={img}>
@@ -1119,16 +1275,16 @@ export default function AdminDashboardPage() {
                     value={prodDescription}
                     onChange={(e) => setProdDescription(e.target.value)}
                     rows={2}
-                    className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg"
+                    className="w-full px-3 py-2 text-base sm:text-sm border border-stone-300 rounded-lg"
                   />
                 </div>
               </div>
 
               {/* Variants Editor */}
-              <div className="space-y-2 border-t border-stone-200 pt-4">
+              <div className="space-y-2 border-t border-stone-200 pt-3">
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-stone-900">
-                    Size & Colour Variants + Stock Quantities
+                    Variants & Stock
                   </span>
                   <button
                     type="button"
@@ -1143,7 +1299,7 @@ export default function AdminDashboardPage() {
                         },
                       ])
                     }
-                    className="text-brand-700 font-semibold hover:underline"
+                    className="text-brand-700 font-semibold hover:underline p-1"
                   >
                     + Add Variant Row
                   </button>
@@ -1162,8 +1318,8 @@ export default function AdminDashboardPage() {
                         copy[idx] = { ...copy[idx], size: e.target.value };
                         setProdVariants(copy);
                       }}
-                      placeholder="Size (S/M/L)"
-                      className="px-2 py-1.5 border border-stone-300 rounded bg-white"
+                      placeholder="Size"
+                      className="px-2 py-1.5 border border-stone-300 rounded bg-white text-xs"
                     />
                     <input
                       type="text"
@@ -1174,7 +1330,7 @@ export default function AdminDashboardPage() {
                         setProdVariants(copy);
                       }}
                       placeholder="Colour"
-                      className="px-2 py-1.5 border border-stone-300 rounded bg-white"
+                      className="px-2 py-1.5 border border-stone-300 rounded bg-white text-xs"
                     />
                     <input
                       type="number"
@@ -1189,7 +1345,7 @@ export default function AdminDashboardPage() {
                         setProdVariants(copy);
                       }}
                       placeholder="Stock"
-                      className="px-2 py-1.5 border border-stone-300 rounded bg-white"
+                      className="px-2 py-1.5 border border-stone-300 rounded bg-white text-xs"
                     />
                     <button
                       type="button"
@@ -1199,7 +1355,7 @@ export default function AdminDashboardPage() {
                         )
                       }
                       disabled={prodVariants.length <= 1}
-                      className="text-red-600 hover:underline disabled:opacity-30"
+                      className="text-red-600 hover:underline disabled:opacity-30 text-xs"
                     >
                       Remove
                     </button>
@@ -1213,6 +1369,7 @@ export default function AdminDashboardPage() {
                     type="checkbox"
                     checked={prodFeatured}
                     onChange={(e) => setProdFeatured(e.target.checked)}
+                    className="h-4 w-4"
                   />
                   <span>Feature on Home Page</span>
                 </label>
@@ -1221,23 +1378,24 @@ export default function AdminDashboardPage() {
                     type="checkbox"
                     checked={prodActive}
                     onChange={(e) => setProdActive(e.target.checked)}
+                    className="h-4 w-4"
                   />
                   <span>Active in Catalogue</span>
                 </label>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-stone-200">
+              <div className="flex justify-end gap-3 pt-3 border-t border-stone-200">
                 <button
                   type="button"
                   onClick={() => setShowProductModal(false)}
-                  className="px-4 py-2.5 rounded-lg border border-stone-300 text-stone-700 font-medium"
+                  className="px-4 py-2.5 rounded-lg border border-stone-300 text-stone-700 font-medium min-h-[44px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   data-testid="modal-save-product-btn"
-                  className="px-6 py-2.5 rounded-lg bg-stone-900 text-white font-semibold hover:bg-stone-800"
+                  className="px-6 py-2.5 rounded-lg bg-stone-900 text-white font-semibold hover:bg-stone-800 min-h-[44px]"
                 >
                   {editingProduct ? "Save Changes" : "Publish Product"}
                 </button>
@@ -1249,4 +1407,3 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
-

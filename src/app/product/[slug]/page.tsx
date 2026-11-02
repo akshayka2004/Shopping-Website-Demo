@@ -12,6 +12,7 @@ import {
   ShoppingBag,
   Truck,
   RefreshCw,
+  Share2,
 } from "lucide-react";
 import { formatPrice, siteConfig } from "@/config/site";
 import { useStore } from "@/context/StoreContext";
@@ -144,13 +145,13 @@ export default function ProductDetailPage() {
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           <div className="aspect-[4/5] bg-stone-200 rounded-2xl animate-pulse" />
-          <div className="space-y-6">
+          <div className="space-y-4">
             <div className="h-8 bg-stone-200 rounded w-3/4 animate-pulse" />
             <div className="h-6 bg-stone-200 rounded w-1/4 animate-pulse" />
-            <div className="h-32 bg-stone-200 rounded animate-pulse" />
+            <div className="h-28 bg-stone-200 rounded animate-pulse" />
           </div>
         </div>
       </div>
@@ -159,7 +160,7 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-20 text-center space-y-4">
+      <div className="max-w-3xl mx-auto px-4 py-16 text-center space-y-4">
         <h1 className="text-2xl font-serif text-stone-900">
           Garment Not Found
         </h1>
@@ -168,7 +169,7 @@ export default function ProductDetailPage() {
         </p>
         <Link
           href="/shop"
-          className="inline-block px-6 py-3 bg-stone-900 text-white text-sm font-medium rounded-md"
+          className="inline-block px-6 py-3 bg-stone-900 text-white text-sm font-medium rounded-lg"
         >
           Return to Catalogue
         </Link>
@@ -179,37 +180,37 @@ export default function ProductDetailPage() {
   const inStock = currentVariant ? currentVariant.stock > 0 : false;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
-      {/* Breadcrumb */}
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-10 sm:space-y-16">
+      {/* Breadcrumb - Mobile scrollable */}
       <nav
         aria-label="Breadcrumb"
-        className="flex items-center gap-2 text-xs text-stone-500"
+        className="flex items-center gap-1.5 text-xs text-stone-500 overflow-x-auto whitespace-nowrap pb-1 scrollbar-none"
       >
         <Link href="/" className="hover:text-stone-900">
           Home
         </Link>
-        <ChevronRight className="h-3.5 w-3.5" />
+        <ChevronRight className="h-3.5 w-3.5 shrink-0" />
         <Link href="/shop" className="hover:text-stone-900">
           Shop
         </Link>
-        <ChevronRight className="h-3.5 w-3.5" />
+        <ChevronRight className="h-3.5 w-3.5 shrink-0" />
         <Link
           href={`/shop?category=${product.categorySlug}`}
           className="hover:text-stone-900"
         >
           {product.categoryName}
         </Link>
-        <ChevronRight className="h-3.5 w-3.5" />
-        <span className="text-stone-900 font-medium truncate">
+        <ChevronRight className="h-3.5 w-3.5 shrink-0" />
+        <span className="text-stone-900 font-medium truncate max-w-[140px] sm:max-w-none">
           {product.title}
         </span>
       </nav>
 
       {/* Main Product Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14">
         {/* Image Gallery */}
-        <div className="lg:col-span-6 space-y-4">
-          <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-stone-100 border border-stone-200">
+        <div className="lg:col-span-6 space-y-3 sm:space-y-4">
+          <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-stone-100 border border-stone-200 shadow-sm">
             <img
               src={activeImage}
               alt={product.title}
@@ -218,13 +219,13 @@ export default function ProductDetailPage() {
             />
           </div>
           {product.images.length > 1 && (
-            <div className="flex gap-3">
+            <div className="flex gap-2.5 overflow-x-auto pb-1 scrollbar-none">
               {product.images.map((img) => (
                 <button
                   key={img}
                   type="button"
                   onClick={() => setActiveImage(img)}
-                  className={`w-20 aspect-[4/5] rounded-lg overflow-hidden border-2 ${
+                  className={`w-16 sm:w-20 aspect-[4/5] rounded-lg overflow-hidden border-2 shrink-0 ${
                     activeImage === img
                       ? "border-stone-900"
                       : "border-transparent opacity-70"
@@ -242,8 +243,8 @@ export default function ProductDetailPage() {
         </div>
 
         {/* Product Info & Variant Selector */}
-        <div className="lg:col-span-6 space-y-6">
-          <div className="space-y-2 border-b border-stone-200 pb-5">
+        <div className="lg:col-span-6 space-y-5 sm:space-y-6">
+          <div className="space-y-1.5 sm:space-y-2 border-b border-stone-200 pb-4 sm:pb-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold uppercase tracking-widest text-brand-700">
                 {product.categoryName}
@@ -257,21 +258,21 @@ export default function ProductDetailPage() {
 
             <h1
               data-testid="product-detail-title"
-              className="text-2xl sm:text-3xl font-serif text-stone-900"
+              className="text-2xl sm:text-3xl font-serif text-stone-900 leading-tight"
             >
               {product.title}
             </h1>
 
-            <div className="flex items-baseline gap-3 pt-1">
+            <div className="flex items-baseline gap-2 sm:gap-3 pt-1">
               <span
                 data-testid="product-detail-price"
-                className="text-2xl font-semibold text-stone-900"
+                className="text-2xl sm:text-3xl font-semibold text-stone-900"
               >
                 {formatPrice(product.price)}
               </span>
               {product.compareAtPrice &&
                 product.compareAtPrice > product.price && (
-                  <span className="text-sm text-stone-400 line-through">
+                  <span className="text-xs sm:text-sm text-stone-400 line-through">
                     {formatPrice(product.compareAtPrice)}
                   </span>
                 )}
@@ -286,7 +287,7 @@ export default function ProductDetailPage() {
           </p>
 
           {/* Colour Selection */}
-          <div className="space-y-2.5">
+          <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
               <span className="font-medium text-stone-900">
                 Colour:{" "}
@@ -298,7 +299,7 @@ export default function ProductDetailPage() {
                 </span>
               </span>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-2.5">
               {uniqueColors.map((c) => {
                 const isSelected = c.color === selectedColor;
                 return (
@@ -307,14 +308,14 @@ export default function ProductDetailPage() {
                     type="button"
                     data-testid={`variant-color-${c.color.toLowerCase()}`}
                     onClick={() => handleColorChange(c.color)}
-                    className={`flex items-center gap-2 px-3.5 py-2 rounded-lg border text-xs font-medium transition-all ${
+                    className={`flex items-center gap-2 px-3.5 py-2.5 rounded-lg border text-xs font-medium min-h-[44px] transition-all ${
                       isSelected
                         ? "border-stone-900 bg-stone-900 text-white shadow-sm"
-                        : "border-stone-300 bg-white text-stone-800 hover:border-stone-500"
+                        : "border-stone-300 bg-white text-stone-800 hover:border-stone-500 active:bg-stone-100"
                     }`}
                   >
                     <span
-                      className="w-3.5 h-3.5 rounded-full border border-white/40"
+                      className="w-3.5 h-3.5 rounded-full border border-white/40 shrink-0"
                       style={{ backgroundColor: c.colorHex }}
                     />
                     {c.color}
@@ -325,7 +326,7 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Size Selection */}
-          <div className="space-y-2.5">
+          <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
               <span className="font-medium text-stone-900">
                 Size:{" "}
@@ -336,11 +337,9 @@ export default function ProductDetailPage() {
                   {selectedSize}
                 </span>
               </span>
-              <span className="text-xs text-stone-500">
-                Standard Contemporary Fit
-              </span>
+              <span className="text-xs text-stone-500">Standard Fit</span>
             </div>
-            <div className="flex flex-wrap gap-2.5">
+            <div className="flex flex-wrap gap-2">
               {availableSizesForColor.map((v) => {
                 const isSelected = v.size === selectedSize;
                 const isOut = v.stock <= 0;
@@ -350,12 +349,12 @@ export default function ProductDetailPage() {
                     type="button"
                     data-testid={`variant-size-${v.size.toLowerCase()}`}
                     onClick={() => setSelectedSize(v.size)}
-                    className={`min-w-[52px] px-4 py-2.5 rounded-lg border text-xs font-semibold transition-all ${
+                    className={`min-w-[48px] min-h-[44px] px-3.5 py-2 rounded-lg border text-xs font-semibold transition-all ${
                       isSelected
-                        ? "border-stone-900 bg-stone-900 text-white"
+                        ? "border-stone-900 bg-stone-900 text-white shadow-sm"
                         : isOut
                         ? "border-stone-200 bg-stone-100 text-stone-400 line-through"
-                        : "border-stone-300 bg-white text-stone-800 hover:border-stone-600"
+                        : "border-stone-300 bg-white text-stone-800 hover:border-stone-600 active:bg-stone-100"
                     }`}
                   >
                     {v.size}
@@ -372,7 +371,7 @@ export default function ProductDetailPage() {
           >
             {inStock && currentVariant ? (
               <>
-                <span className="w-2 h-2 rounded-full bg-emerald-600" />
+                <span className="w-2 h-2 rounded-full bg-emerald-600 shrink-0" />
                 <span className="text-emerald-800">
                   In Stock — {currentVariant.stock} units available in{" "}
                   {currentVariant.size} / {currentVariant.color}
@@ -380,7 +379,7 @@ export default function ProductDetailPage() {
               </>
             ) : (
               <>
-                <span className="w-2 h-2 rounded-full bg-red-600" />
+                <span className="w-2 h-2 rounded-full bg-red-600 shrink-0" />
                 <span className="text-red-700">
                   Currently Out of Stock in this variant
                 </span>
@@ -389,22 +388,22 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Quantity & Actions */}
-          <div className="pt-2 space-y-4">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center border border-stone-300 rounded-lg bg-white">
+          <div className="pt-2 space-y-3 sm:space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center border border-stone-300 rounded-lg bg-white shrink-0 min-h-[44px]">
                 <button
                   type="button"
                   data-testid="qty-decrease-btn"
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                   disabled={!inStock || quantity <= 1}
-                  className="p-3 text-stone-700 hover:text-stone-950 disabled:opacity-40"
+                  className="p-3 text-stone-700 hover:text-stone-950 disabled:opacity-40 min-h-[44px] min-w-[44px] flex items-center justify-center"
                   aria-label="Decrease Quantity"
                 >
                   <Minus className="h-4 w-4" />
                 </button>
                 <span
                   data-testid="product-quantity-value"
-                  className="w-10 text-center text-sm font-semibold"
+                  className="w-8 text-center text-sm font-semibold"
                 >
                   {quantity}
                 </span>
@@ -420,7 +419,7 @@ export default function ProductDetailPage() {
                     !inStock ||
                     (currentVariant ? quantity >= currentVariant.stock : true)
                   }
-                  className="p-3 text-stone-700 hover:text-stone-950 disabled:opacity-40"
+                  className="p-3 text-stone-700 hover:text-stone-950 disabled:opacity-40 min-h-[44px] min-w-[44px] flex items-center justify-center"
                   aria-label="Increase Quantity"
                 >
                   <Plus className="h-4 w-4" />
@@ -432,7 +431,7 @@ export default function ProductDetailPage() {
                 data-testid="add-to-cart-button"
                 disabled={!inStock}
                 onClick={() => handleAddToCart(false)}
-                className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-stone-900 text-white text-sm font-medium hover:bg-stone-800 disabled:bg-stone-300 disabled:cursor-not-allowed transition-colors"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-stone-900 text-white text-sm font-semibold hover:bg-stone-800 disabled:bg-stone-300 disabled:cursor-not-allowed transition-colors min-h-[44px] shadow-sm"
               >
                 <ShoppingBag className="h-4 w-4" />
                 {inStock ? "Add to Cart" : "Out of Stock"}
@@ -444,7 +443,7 @@ export default function ProductDetailPage() {
                 type="button"
                 data-testid="buy-now-button"
                 onClick={() => handleAddToCart(true)}
-                className="w-full py-3 rounded-lg border border-stone-900 text-stone-900 text-sm font-medium hover:bg-stone-100 transition-colors"
+                className="w-full py-3.5 rounded-lg border border-stone-900 text-stone-900 text-sm font-semibold hover:bg-stone-100 active:bg-stone-200 transition-colors min-h-[44px]"
               >
                 Buy It Now — Instant Checkout
               </button>
@@ -457,37 +456,66 @@ export default function ProductDetailPage() {
               <h3 className="font-semibold uppercase tracking-wider text-stone-900 mb-1">
                 Fabric & Care Instructions
               </h3>
-              <p>{product.fabricAndCare}</p>
+              <p className="leading-relaxed">{product.fabricAndCare}</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
-              <div className="flex items-center gap-2 bg-stone-100 p-3 rounded-lg">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
+              <div className="flex items-center gap-2 bg-stone-100 p-2.5 rounded-lg">
                 <Truck className="h-4 w-4 text-stone-700 shrink-0" />
                 <span>
                   Free shipping over{" "}
                   {formatPrice(siteConfig.freeShippingThreshold)}
                 </span>
               </div>
-              <div className="flex items-center gap-2 bg-stone-100 p-3 rounded-lg">
+              <div className="flex items-center gap-2 bg-stone-100 p-2.5 rounded-lg">
                 <RefreshCw className="h-4 w-4 text-stone-700 shrink-0" />
-                <span>14-day hassle-free size exchange</span>
+                <span>14-day hassle-free exchange</span>
               </div>
-              <div className="flex items-center gap-2 bg-stone-100 p-3 rounded-lg">
+              <div className="flex items-center gap-2 bg-stone-100 p-2.5 rounded-lg">
                 <ShieldCheck className="h-4 w-4 text-stone-700 shrink-0" />
-                <span>Quality checked before dispatch</span>
+                <span>Quality tested & inspected</span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Related Products */}
+      {/* Sticky Mobile Add-to-Cart Bar (< lg screens, above bottom nav) */}
+      {inStock && currentVariant && (
+        <div
+          data-testid="mobile-sticky-buy-bar"
+          className="fixed bottom-[56px] left-0 right-0 z-30 lg:hidden bg-white/95 backdrop-blur-md border-t border-stone-200 p-3 shadow-lg flex items-center justify-between gap-3"
+        >
+          <div className="min-w-0">
+            <p className="text-xs font-semibold text-stone-900 truncate">
+              {product.title}
+            </p>
+            <p className="text-xs text-stone-500">
+              {currentVariant.size} / {currentVariant.color} •{" "}
+              <strong className="text-stone-900 font-semibold">
+                {formatPrice(product.price)}
+              </strong>
+            </p>
+          </div>
+          <button
+            type="button"
+            data-testid="mobile-sticky-add-cart-btn"
+            onClick={() => handleAddToCart(false)}
+            className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 bg-stone-900 text-white text-xs font-semibold rounded-lg shrink-0 min-h-[40px] shadow-sm"
+          >
+            <ShoppingBag className="h-4 w-4" />
+            Add
+          </button>
+        </div>
+      )}
+
+      {/* Related Products - 2-Column on Mobile */}
       {relatedProducts.length > 0 && (
-        <section className="pt-10 border-t border-stone-200 space-y-6">
-          <h2 className="text-2xl font-serif text-stone-900">
+        <section className="pt-8 border-t border-stone-200 space-y-4 sm:space-y-6">
+          <h2 className="text-xl sm:text-2xl font-serif text-stone-900">
             You May Also Like
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {relatedProducts.map((rel) => (
               <ProductCard key={rel.id} product={rel} />
             ))}
@@ -497,4 +525,3 @@ export default function ProductDetailPage() {
     </div>
   );
 }
-

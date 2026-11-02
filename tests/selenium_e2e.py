@@ -78,8 +78,11 @@ def run_e2e_suite():
             f"Hero heading: '{hero.text}'",
         )
 
-        # Verify all images on the home page actually loaded (naturalWidth > 0)
-        time.sleep(0.8)
+        # Scroll to load all images on the home page and verify naturalWidth > 0
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(1.0)
+        driver.execute_script("window.scrollTo(0, 0);")
+        time.sleep(0.5)
         imgs = driver.find_elements(By.TAG_NAME, "img")
         loaded_imgs = [
             img.get_attribute("src")

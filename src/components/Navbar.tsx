@@ -11,6 +11,8 @@ import {
   X,
   ShieldCheck,
   LogOut,
+  ChevronRight,
+  Sparkles,
 } from "lucide-react";
 import { siteConfig, formatPrice } from "@/config/site";
 import { useStore } from "@/context/StoreContext";
@@ -46,31 +48,35 @@ export function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-stone-200">
-      {/* Top Promo Banner */}
-      <div className="bg-brand-900 text-stone-100 text-xs py-2 px-4 text-center tracking-wide">
-        Complimentary Express Delivery on all orders above{" "}
-        <span className="font-semibold">
-          {formatPrice(siteConfig.freeShippingThreshold)}
-        </span>{" "}
-        • 14-Day Easy Returns & Exchanges
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200">
+      {/* Top Promo Banner - compact on mobile */}
+      <div className="bg-brand-900 text-stone-100 text-[11px] sm:text-xs py-1.5 px-3 text-center tracking-wide flex items-center justify-center gap-1.5">
+        <Sparkles className="h-3 w-3 text-amber-300 shrink-0 hidden sm:inline" />
+        <span>
+          Complimentary Delivery over{" "}
+          <strong className="font-semibold text-white">
+            {formatPrice(siteConfig.freeShippingThreshold)}
+          </strong>{" "}
+          <span className="hidden sm:inline">• 14-Day Easy Returns</span>
+        </span>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Mobile menu button */}
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-16">
+          {/* Mobile menu trigger */}
           <div className="flex items-center lg:hidden">
             <button
               type="button"
               data-testid="mobile-menu-toggle"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 -ml-2 text-stone-700 hover:text-stone-950"
-              aria-label="Toggle Menu"
+              className="p-2.5 -ml-2 text-stone-800 hover:text-stone-950 focus:outline-none focus:ring-2 focus:ring-stone-900 rounded-md min-h-[44px] min-w-[44px] flex items-center justify-center"
+              aria-label="Toggle Navigation Menu"
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? (
-                <X className="h-6 w-6" />
+                <X className="h-5 w-5" />
               ) : (
-                <Menu className="h-6 w-6" />
+                <Menu className="h-5 w-5" />
               )}
             </button>
           </div>
@@ -80,7 +86,7 @@ export function Navbar() {
             <Link
               href="/"
               data-testid="brand-logo"
-              className="text-xl sm:text-2xl font-serif tracking-[0.18em] font-semibold text-stone-900"
+              className="text-lg sm:text-2xl font-serif tracking-[0.16em] sm:tracking-[0.18em] font-semibold text-stone-900 active:opacity-80"
             >
               {siteConfig.name}
             </Link>
@@ -114,12 +120,12 @@ export function Navbar() {
           </nav>
 
           {/* Right Action Icons */}
-          <div className="flex items-center space-x-3 sm:space-x-4">
+          <div className="flex items-center space-x-1 sm:space-x-3">
             <button
               type="button"
               data-testid="header-search-toggle"
               onClick={() => setSearchOpen(!searchOpen)}
-              className="p-2 text-stone-700 hover:text-stone-950 transition-colors"
+              className="p-2 sm:p-2.5 text-stone-700 hover:text-stone-950 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
               aria-label="Search Products"
             >
               <Search className="h-5 w-5" />
@@ -137,14 +143,15 @@ export function Navbar() {
             )}
 
             {user ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center">
                 <Link
                   href="/account"
                   data-testid="nav-account-link"
-                  className="p-2 text-stone-700 hover:text-stone-950 flex items-center gap-1.5 text-sm font-medium"
+                  className="p-2 sm:p-2.5 text-stone-700 hover:text-stone-950 flex items-center gap-1.5 text-sm font-medium min-h-[44px] min-w-[44px]"
+                  aria-label="My Account"
                 >
                   <UserIcon className="h-5 w-5" />
-                  <span className="hidden md:inline max-w-[110px] truncate">
+                  <span className="hidden md:inline max-w-[100px] truncate">
                     {user.name.split(" ")[0]}
                   </span>
                 </Link>
@@ -153,7 +160,7 @@ export function Navbar() {
                   data-testid="nav-logout-button"
                   onClick={() => logout()}
                   title="Sign Out"
-                  className="p-2 text-stone-500 hover:text-red-600 transition-colors"
+                  className="hidden sm:inline-flex p-2 text-stone-400 hover:text-red-600 transition-colors"
                 >
                   <LogOut className="h-4 w-4" />
                 </button>
@@ -162,23 +169,25 @@ export function Navbar() {
               <Link
                 href="/login"
                 data-testid="nav-login-link"
-                className="p-2 text-stone-700 hover:text-stone-950 flex items-center gap-1.5 text-sm font-medium"
+                className="p-2 sm:p-2.5 text-stone-700 hover:text-stone-950 flex items-center gap-1.5 text-sm font-medium min-h-[44px] min-w-[44px]"
               >
                 <UserIcon className="h-5 w-5" />
-                <span className="hidden sm:inline">Sign In</span>
+                <span className="hidden sm:inline text-xs font-medium">
+                  Sign In
+                </span>
               </Link>
             )}
 
             <Link
               href="/cart"
               data-testid="nav-cart-link"
-              className="relative p-2 text-stone-700 hover:text-stone-950 transition-colors flex items-center"
+              className="relative p-2 sm:p-2.5 text-stone-700 hover:text-stone-950 transition-colors flex items-center min-h-[44px] min-w-[44px] justify-center"
               aria-label="Shopping Cart"
             >
               <ShoppingBag className="h-5 w-5" />
               <span
                 data-testid="cart-badge-count"
-                className="ml-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-semibold rounded-full bg-stone-900 text-white min-w-[20px]"
+                className="ml-1 inline-flex items-center justify-center px-1.5 py-0.5 text-[11px] font-semibold rounded-full bg-stone-900 text-white min-w-[18px] sm:min-w-[20px]"
               >
                 {cartCount}
               </span>
@@ -188,7 +197,7 @@ export function Navbar() {
 
         {/* Expandable Search Bar */}
         {searchOpen && (
-          <div className="py-3 border-t border-stone-100">
+          <div className="py-2.5 sm:py-3 border-t border-stone-100 animate-in fade-in slide-in-from-top-1 duration-150">
             <form
               onSubmit={handleSearchSubmit}
               className="flex items-center gap-2 max-w-xl mx-auto"
@@ -201,14 +210,14 @@ export function Navbar() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search shirts, trousers, linen, merino, dresses..."
-                  className="w-full pl-10 pr-4 py-2 text-sm border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-900"
+                  className="w-full pl-10 pr-4 py-2 text-base sm:text-sm border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900"
                   autoFocus
                 />
               </div>
               <button
                 type="submit"
                 data-testid="header-search-submit"
-                className="px-4 py-2 bg-stone-900 text-white text-sm font-medium rounded-md hover:bg-stone-800"
+                className="px-4 py-2 bg-stone-900 text-white text-sm font-medium rounded-lg hover:bg-stone-800 min-h-[40px]"
               >
                 Search
               </button>
@@ -221,54 +230,99 @@ export function Navbar() {
       {mobileMenuOpen && (
         <div
           data-testid="mobile-nav-drawer"
-          className="lg:hidden border-t border-stone-200 bg-white px-4 pt-3 pb-6 space-y-3"
+          className="lg:hidden border-t border-stone-200 bg-white/98 backdrop-blur-md px-4 pt-4 pb-8 space-y-4 shadow-xl max-h-[85vh] overflow-y-auto animate-in slide-in-from-top-2 duration-200"
         >
-          <form onSubmit={handleSearchSubmit} className="flex gap-2 mb-3">
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search catalogue..."
-              className="flex-1 px-3 py-2 text-sm border border-stone-300 rounded-md"
-            />
+          <form onSubmit={handleSearchSubmit} className="flex gap-2">
+            <div className="relative flex-1">
+              <Search className="h-4 w-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search garments..."
+                className="w-full pl-9 pr-3 py-2.5 text-base sm:text-sm border border-stone-300 rounded-lg focus:ring-2 focus:ring-stone-900"
+              />
+            </div>
             <button
               type="submit"
-              className="px-3 py-2 bg-stone-900 text-white text-sm rounded-md"
+              className="px-4 py-2.5 bg-stone-900 text-white text-sm font-medium rounded-lg"
             >
               Go
             </button>
           </form>
-          <div className="flex flex-col space-y-2">
+
+          <div className="flex flex-col divide-y divide-stone-100 text-stone-800 font-medium">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-base font-medium text-stone-800 hover:text-stone-950 border-b border-stone-100"
+                className="py-3 flex items-center justify-between text-base hover:text-stone-950 active:bg-stone-50"
               >
-                {link.label}
+                <span>{link.label}</span>
+                <ChevronRight className="h-4 w-4 text-stone-400" />
               </Link>
             ))}
+
             {user?.role === "ADMIN" && (
               <Link
                 href="/admin"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-base font-semibold text-amber-800"
+                className="py-3 flex items-center justify-between text-base font-semibold text-amber-900"
               >
-                Admin Dashboard
+                <span className="flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-amber-700" />
+                  Admin Dashboard
+                </span>
+                <ChevronRight className="h-4 w-4 text-amber-700" />
               </Link>
             )}
-            <Link
-              href={user ? "/account" : "/login"}
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-base font-medium text-stone-700"
-            >
-              {user ? `My Account (${user.name})` : "Customer Sign In / Register"}
-            </Link>
+
+            <div className="pt-3 flex flex-col gap-2">
+              {user ? (
+                <>
+                  <Link
+                    href="/account"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-2.5 text-sm text-stone-700 font-normal flex items-center justify-between"
+                  >
+                    <span>My Account ({user.name})</span>
+                    <ChevronRight className="h-4 w-4 text-stone-400" />
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      logout();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="py-2 text-sm text-red-700 text-left flex items-center gap-2"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <div className="grid grid-cols-2 gap-2 pt-2">
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-2.5 text-center text-sm font-semibold border border-stone-300 rounded-lg text-stone-800"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/register"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-2.5 text-center text-sm font-semibold bg-stone-900 text-white rounded-lg"
+                  >
+                    Create Account
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
     </header>
   );
 }
-

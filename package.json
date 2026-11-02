@@ -10,6 +10,8 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test:e2e": "python tests/selenium_e2e.py",
+    "test:mobile": "python tests/selenium_mobile_e2e.py",
+    "test:all": "python tests/selenium_e2e.py && python tests/selenium_mobile_e2e.py",
     "db:generate": "prisma generate",
     "db:push": "prisma db push"
   },
